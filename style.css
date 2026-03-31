@@ -1,0 +1,37 @@
+/* Keep background simple */
+[data-testid="stAppViewContainer"] {
+    background: #0f172a;
+}
+
+/* Make buttons BIG + stylish */
+.stButton > button {
+    width: 100%;
+    height: 70px;
+    font-size: 20px;
+    font-weight: 600;
+    border-radius: 15px;
+    border: none;
+
+    /* Gradient */
+    background: linear-gradient(135deg, #3b82f6, #06b6d4);
+    color: white;
+
+    /* Smooth animation */
+    transition: all 0.3s ease;
+}
+
+/* Hover effect */
+.stButton > button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+}
+
+/* Click effect */
+.stButton > button:active {
+    transform: scale(0.98);
+}
+
+/* Add spacing between buttons */
+div.stButton {
+    margin: 10px 0;
+}

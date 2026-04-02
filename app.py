@@ -174,15 +174,23 @@ def get_expected_age(age_prob):
 # --------------------------------
 def plot_results(gender_prob, age_prob, race_prob):
     fig, axes = plt.subplots(1, 3, figsize=(18,5))
+    fig.patch.set_facecolor('#0f172a') # Dark background
 
-    axes[0].bar(["Male","Female"], gender_prob)
-    axes[0].set_title("Gender")
+    for ax in axes:
+        ax.set_facecolor('#0f172a')
+        ax.tick_params(colors='#e2e8f0', labelcolor='#e2e8f0') 
+        ax.title.set_color('#f8fafc')
+        for spine in ax.spines.values():
+            spine.set_edgecolor('#334155')
 
-    axes[1].bar(list(age_dict.values()), age_prob)
-    axes[1].set_title("Age")
+    axes[0].bar(["Male","Female"], gender_prob, color='#38bdf8')
+    axes[0].set_title("Gender", fontsize=14, pad=10)
 
-    axes[2].bar(list(race_dict.values()), race_prob)
-    axes[2].set_title("Ethnicity")
+    axes[1].bar(list(age_dict.values()), age_prob, color='#818cf8')
+    axes[1].set_title("Age", fontsize=14, pad=10)
+
+    axes[2].bar(list(race_dict.values()), race_prob, color='#34d399')
+    axes[2].set_title("Ethnicity", fontsize=14, pad=10)
 
     for ax in axes:
         ax.tick_params(axis='x', rotation=45)
@@ -194,24 +202,60 @@ def plot_results(gender_prob, age_prob, race_prob):
 # HOME
 # --------------------------------
 if page == "Home":
-    st.title("FairFace Detection System")
+    st.markdown("<h1 style='text-align: center; padding-top: 2rem; color: #f8fafc;'>✨ FairFace Detection System</h1>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align: center; color: #94a3b8; font-size: 1.25rem; margin-bottom: 3rem;'>Advanced demographic analysis powered by Deep Learning.</p>", unsafe_allow_html=True)
 
     col1, col2 = st.columns(2)
 
     with col1:
-        if st.button("📷 Camera Detection"):
+        st.markdown("""
+        <div class="glass-card">
+            <h4>📷 Camera Detection</h4>
+            <p>Analyze demographics in real-time using your webcam.</p>
+        </div>
+        """, unsafe_allow_html=True)
+        if st.button("Open Camera", use_container_width=True):
             go_to("Camera")
-        if st.button("📊 Dataset Info"):
+            
+        st.markdown("""
+        <div class="glass-card" style="margin-top: 2rem;">
+            <h4>📊 Dataset Info</h4>
+            <p>Explore the diverse characteristics of the FairFace dataset.</p>
+        </div>
+        """, unsafe_allow_html=True)
+        if st.button("View Dataset", use_container_width=True):
             go_to("Dataset")
 
     with col2:
-        if st.button("📁 Upload Image"):
+        st.markdown("""
+        <div class="glass-card">
+            <h4>📁 Upload Image</h4>
+            <p>Upload a photo for high-accuracy demographic prediction.</p>
+        </div>
+        """, unsafe_allow_html=True)
+        if st.button("Upload Photo", use_container_width=True):
             go_to("Upload")
-        if st.button("📈 Performance"):
+            
+        st.markdown("""
+        <div class="glass-card" style="margin-top: 2rem;">
+            <h4>📈 Performance</h4>
+            <p>Review the multi-task CNN's accuracy metrics across demographics.</p>
+        </div>
+        """, unsafe_allow_html=True)
+        if st.button("View Performance", use_container_width=True):
             go_to("Performance")
 
-    if st.button("🕒 Prediction History"):
-        go_to("History")
+    st.markdown("<hr style='border-color: #334155; margin: 3rem 0;'>", unsafe_allow_html=True)
+    
+    col3, col4, col5 = st.columns([1,2,1])
+    with col4:
+        st.markdown("""
+        <div class="glass-card" style="text-align: center; padding: 20px;">
+            <p style="text-align: center;">View a detailed log of all past analyses.</p>
+        </div>
+        """, unsafe_allow_html=True)
+        if st.button("🕒 Prediction History", use_container_width=True):
+            go_to("History")
 
 # --------------------------------
 # CAMERA
@@ -245,9 +289,12 @@ elif page == "Camera":
                 age = get_expected_age(age_prob)
                 race = race_dict[np.argmax(race_prob)]
 
-                st.write(f"- Gender: {gender}")
-                st.write(f"- Age: {age}")
-                st.write(f"- Ethnicity: {race}")
+                st.markdown("<hr style='border-color: #334155; margin: 1rem 0;'>", unsafe_allow_html=True)
+                mcol1, mcol2, mcol3 = st.columns(3)
+                mcol1.metric("Gender", gender)
+                mcol2.metric("Age", age)
+                mcol3.metric("Ethnicity", race)
+                st.markdown("<hr style='border-color: #334155; margin: 1rem 0;'>", unsafe_allow_html=True)
 
                 plot_results(gender_prob, age_prob, race_prob)
 
@@ -292,9 +339,12 @@ elif page == "Upload":
                 age = get_expected_age(age_prob)
                 race = race_dict[np.argmax(race_prob)]
 
-                st.write(f"- Gender: {gender}")
-                st.write(f"- Age: {age}")
-                st.write(f"- Ethnicity: {race}")
+                st.markdown("<hr style='border-color: #334155; margin: 1rem 0;'>", unsafe_allow_html=True)
+                mcol1, mcol2, mcol3 = st.columns(3)
+                mcol1.metric("Gender", gender)
+                mcol2.metric("Age", age)
+                mcol3.metric("Ethnicity", race)
+                st.markdown("<hr style='border-color: #334155; margin: 1rem 0;'>", unsafe_allow_html=True)
 
                 plot_results(gender_prob, age_prob, race_prob)
 

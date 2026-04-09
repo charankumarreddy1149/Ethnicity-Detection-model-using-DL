@@ -1,7 +1,7 @@
 import streamlit as st
 
 # MUST BE FIRST
-st.set_page_config(page_title="Ethinicity Detection using Deep Learning", layout="wide")
+st.set_page_config(page_title="Ethnicity Detection model using Deep Learning", layout="wide")
 
 def load_css():
     with open("style.css") as f:
@@ -157,17 +157,7 @@ def predict_full(face):
     )
 
 def get_expected_age(age_prob):
-    mid_ages = [1, 6, 15, 25, 35, 45, 55, 65, 80]
-    expected_age = sum(p * m for p, m in zip(age_prob, mid_ages))
-    if expected_age <= 2.5: return "0-2"
-    elif expected_age <= 9.5: return "3-9"
-    elif expected_age <= 19.5: return "10-19"
-    elif expected_age <= 29.5: return "20-29"
-    elif expected_age <= 39.5: return "30-39"
-    elif expected_age <= 49.5: return "40-49"
-    elif expected_age <= 59.5: return "50-59"
-    elif expected_age <= 69.5: return "60-69"
-    else: return "70+"
+    return age_dict[np.argmax(age_prob)]
 
 # --------------------------------
 # GRAPH
@@ -202,7 +192,7 @@ def plot_results(gender_prob, age_prob, race_prob):
 # HOME
 # --------------------------------
 if page == "Home":
-    st.markdown("<h1 style='text-align: center; padding-top: 2rem; color: #f8fafc;'>✨ FairFace Detection System</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center; padding-top: 2rem; color: #f8fafc;'>✨ Ethnicity Detection model using Deep Learning</h1>", unsafe_allow_html=True)
     st.markdown("<p style='text-align: center; color: #94a3b8; font-size: 1.25rem; margin-bottom: 3rem;'>Advanced demographic analysis powered by Deep Learning.</p>", unsafe_allow_html=True)
 
     col1, col2 = st.columns(2)
